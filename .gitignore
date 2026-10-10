@@ -1,0 +1,7 @@
+# секреты не коммитим — только пути
+.env
+*.env
+!.env.example
+secrets/
+*.key
+*.pem
