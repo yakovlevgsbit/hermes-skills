@@ -19,14 +19,30 @@ hermes skills install yakovlevgsbit/hermes-skills/development/prompt-engineering
 
 ## Что внутри
 
+### development — боты, платежи, промпты
 | Навык | Зачем |
 |---|---|
-| `development/telegram-bot-payments` | Платежи в боте: CloudPayments / ЮKassa, подписки, рекуррент, выдача и отзыв доступа |
-| `development/prompt-engineering` | Системные промпты, строгий JSON-вывод, text→image |
-| `development/max-messenger-api` | Платформа MAX: sender в query, endpoints, ловушки верификации |
-| `development/service-credentials-vault` | Хранение ключей: `/root/.secrets` (700/600), проверка, без утечек в код |
-| `integrations/n8n-workflows` | n8n REST: аудит, PUT в живые воркфлоу, бэкапы, шаблоны |
-| `integrations/google-sheets-writes` | Запись в Google Sheets через API v4 (Bearer, обход ловушек) |
+| `telegram-bot-payments` | Платежи в боте: CloudPayments / ЮKassa, подписки, рекуррент, доступ |
+| `stripe-link-cli` | Международные платежи: Stripe Link, карты, подписки, апрувы |
+| `prompt-engineering` | Системные промпты, строгий JSON-вывод, text→image |
+| `max-messenger-api` | Платформа MAX: sender в query, endpoints, ловушки верификации |
+| `shopify` | E-commerce: Shopify Admin/Storefront GraphQL |
+| `telephony` | Голосовые боты: Twilio номера, SMS/MMS, AI-звонки |
+| `service-credentials-vault` | Хранение ключей: `/root/.secrets` (700/600), без утечек |
+| `subagent-driven-development` | Делегирование кода сабагентам + 2-этапное ревью |
+| `dynamic-workflow` | Fan-out планы, adversarial-верификация, волны |
+
+### integrations — n8n, таблицы, деплой, скрапинг
+| Навык | Зачем |
+|---|---|
+| `n8n-workflows` | n8n REST: аудит, PUT в живые воркфлоу, бэкапы, шаблоны |
+| `google-sheets-writes` | Запись в Google Sheets через API v4 (Bearer) |
+| `docker-management` | Управление контейнерами, образами, Compose |
+| `publish-site` | Деплой на GitHub/Cloudflare/Netlify Pages |
+| `cloudflare-temporary-deploy` | Показать демо клиенту за секунды, без аккаунта |
+| `watchers` | Мониторинг RSS/JSON/GitHub с дедупом (усилитель лидов) |
+| `searxng-search` | Бесплатный keyless мета-поиск (70+ движков) |
+| `scrapling` | Скрапинг со stealth + Cloudflare bypass |
 
 ## Формат
 
