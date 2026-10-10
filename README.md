@@ -31,6 +31,9 @@ hermes skills install yakovlevgsbit/hermes-skills/development/prompt-engineering
 | `service-credentials-vault` | Хранение ключей: `/root/.secrets` (700/600), без утечек |
 | `subagent-driven-development` | Делегирование кода сабагентам + 2-этапное ревью |
 | `dynamic-workflow` | Fan-out планы, adversarial-верификация, волны |
+| `famulor-skill` | Голосовые агенты: ассистенты, звонки, кампании, телефония (hosted MCP) |
+| `tweetclaw` | X/Twitter автоматизация: поиск, экспорт подписчиков, мониторы, посты |
+| `cronalytics` | Диагностика cron-задач Hermes: здоровье, сбои, дрейф расписания |
 
 ### integrations — n8n, таблицы, деплой, скрапинг
 | Навык | Зачем |
