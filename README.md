@@ -35,6 +35,7 @@ hermes skills install yakovlevgsbit/hermes-skills/development/prompt-engineering
 | `tweetclaw` | X/Twitter автоматизация: поиск, экспорт подписчиков, мониторы, посты |
 | `cronalytics` | Диагностика cron-задач Hermes: здоровье, сбои, дрейф расписания |
 | `figma` | Тянет дизайн из Figma REST API (нужен `FIGMA_TOKEN`) → реализация макетов |
+| `ui-ux-pro-max` | UI/UX-дизайн интеллект: 79 стилей, палитры, шрифты, UX-правила (search.py, своя база) |
 
 ### integrations — n8n, таблицы, деплой, скрапинг
 | Навык | Зачем |
