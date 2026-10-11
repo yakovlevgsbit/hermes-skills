@@ -34,6 +34,7 @@ hermes skills install yakovlevgsbit/hermes-skills/development/prompt-engineering
 | `famulor-skill` | Голосовые агенты: ассистенты, звонки, кампании, телефония (hosted MCP) |
 | `tweetclaw` | X/Twitter автоматизация: поиск, экспорт подписчиков, мониторы, посты |
 | `cronalytics` | Диагностика cron-задач Hermes: здоровье, сбои, дрейф расписания |
+| `figma` | Тянет дизайн из Figma REST API (нужен `FIGMA_TOKEN`) → реализация макетов |
 
 ### integrations — n8n, таблицы, деплой, скрапинг
 | Навык | Зачем |
