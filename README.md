@@ -44,6 +44,7 @@ hermes skills install yakovlevgsbit/hermes-skills/development/prompt-engineering
 | `graphify-knowledge-graph` | Knowledge graph из codebase, EXTRACTED/INFERRED, MCP tools |
 | `magic-mcp-21st` | 10,000+ React/Tailwind компонентов, HTTP MCP, AI генерация |
 | `strix-ai-pentesting` | AI-пентест, multi-agent orchestration, Docker sandbox |
+| `rea-reverse-engineering` | REA — 324.7k stars, MCP для реверс-инженерии бинарников, JS, .NET, Android, firmware |
 
 ### devops — CI/CD, инфраструктура
 
