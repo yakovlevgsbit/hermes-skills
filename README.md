@@ -46,6 +46,7 @@ hermes skills install yakovlevgsbit/hermes-skills/development/prompt-engineering
 | `strix-ai-pentesting` | AI-пентест, multi-agent orchestration, Docker sandbox |
 | `rea-reverse-engineering` | REA — 324.7k stars, MCP для реверс-инженерии бинарников, JS, .NET, Android, firmware |
 | `ghidra-reverse-engineering` | Ghidra — 87.6k stars, NSA, P-Code IR, Sleigh, headless, multi-arch, free |
+| `tilda-mcp-cdp` | 16 инструментов Tilda через MCP + CDP, обход read-only API |
 
 ### devops — CI/CD, инфраструктура
 
