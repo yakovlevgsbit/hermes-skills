@@ -15,8 +15,9 @@ metadata:
 behind a typed CLI with dry-run/apply semantics and auto-backup before
 every write. Lives at `/root/tilda-agent/`. Secret at
 `/root/.secrets/tilda.env`. Smoke test: `python3 tests/test_smoke.py`
-(18 checks: ping + reads + 6 write cycles with auto-restore — safe on
-production accounts).
+(25 checks: ping + 10 reads + 7 write cycles with auto-restore + 6 block
+content checks — safe on production accounts). Takes ~14 min: Tilda rate-limits
+heavily, the retries dominate the runtime.
 
 ## When to use
 
