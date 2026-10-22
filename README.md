@@ -48,6 +48,7 @@ hermes skills install yakovlevgsbit/hermes-skills/development/prompt-engineering
 | `ghidra-reverse-engineering` | Ghidra — 87.6k stars, NSA, P-Code IR, Sleigh, headless, multi-arch, free |
 | `tilda-mcp-cdp` | 16 инструментов Tilda через MCP + CDP, обход read-only API |
 | `tilda-mcp-official` | Официальный Tilda MCP: 235 инструментов, хост tilda.ru |
+| `tilda-agent` | CLI поверх Tilda MCP: массовые операции, чтение/запись контента блоков, dry-run |
 
 ### devops — CI/CD, инфраструктура
 
