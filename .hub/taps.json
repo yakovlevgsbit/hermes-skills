@@ -1,0 +1,8 @@
+{
+  "taps": [
+    {
+      "repo": "yakovlevgsbit/hermes-skills",
+      "path": "skills/"
+    }
+  ]
+}

@@ -25,7 +25,7 @@ Store every third-party API key in one durable, discoverable place and load it f
 
 `/root/.secrets/` — directory mode `700`, every file `600`. Layout and per-service loading recipes: `references/vault-layout.md`. Run `scripts/verify-vault.sh` for a read-only perms/inventory/leftover-artifact audit — it prints key NAMES, never values. `/root` is already `700`, so non-root users on the box cannot traverse into the vault.
 
-`/root/.hermes/.env` is for **Hermes' own** settings only (its own bot token, its search keys). Service credentials never go there — it is not project-scoped and it does not survive a Hermes reinstall. The vault is deliberately outside `$HERMES_HOME` so a profile wipe cannot take the keys with it.
+`/root/.hermes/.env` is for **Hermes' own** settings only (its own bot token, its search keys, and provider API keys Hermes resolves at runtime). Service credentials for projects and scripts live in the vault — it is outside `$HERMES_HOME`, so a profile wipe cannot take them with it. A script or agent that reads a provider key should resolve it from BOTH: its own env, then the vault, then `~/.hermes/.env`. Do not tell a user a provider key is misplaced for living in `~/.hermes/.env` — that file is exactly where Hermes provider plugins look.
 
 ## Procedure
 
@@ -80,7 +80,9 @@ Use when a page, mini-app or static bundle is served publicly and holds — or m
 - **Revocable keys need a rotation note.** A private key file is not the secret's identity — record which account/SA it belongs to and that deletion of the file does not revoke access.
 - **Decode a credential's own metadata before trusting its lifetime claims.** An API key that is a JWT may carry no `exp` claim at all, meaning it never self-expires and can only be revoked in the issuing UI. Report that when you store it — the user needs to know a leak is not time-bounded.
 - **A service may hold credentials that never leave it, and that is correct.** Bots and workflow engines store their tokens in an internal credential store referenced by id; exports and backups then contain only the id. Before asking the user for a key to "fix" a workflow, check whether the platform already holds it — and never try to extract a value that the API deliberately does not return.
-- **When the user says "just ask me for whatever keys you need", answer with a list of the ones actually missing** and what privilege level each needs (e.g. write-capable vs read-only), not a general request for credentials. Naming the specific file and the specific reason keeps the user from over-granting.
+- **A valid cloud key can still return 501 — check service activation, not the key.** YandexART returns `unknown service` when the image generation service is not activated in the Yandex Cloud console, even with a perfectly valid API key. A 501 or similar "service not found" response from a cloud provider usually means the service needs explicit activation in the provider's console, not that the key is wrong. Always verify the key works on a known-activated service (e.g. YandexGPT text) before debugging the target service.
+- **When the user says 'just ask me for whatever keys you need', answer with a list of the ones actually missing** and what privilege level each needs (e.g. write-capable vs read-only), not a general request for credentials. Naming the specific file and the specific reason keeps the user from over-granting.
+- **When the user pastes a secret in chat anyway, save it and move on.** Flag the exposure in one line, then write the value to the vault and verify it live. Repeating the warning across turns reads as stalling: this user decides fast, and "работаем с тем что дал" means the security call is already made. The durable half of the lesson is the storage and verification, not the lecture — and a JWT pasted in chat should still be decoded for its claims (`email`, `exp`, `jti`) so the user learns whether it self-expires.
 
 7. **Rotating a stored value means editing the file in place, not rewriting it.** A secret file may hold more than the key you are changing — a hook secret on line 2, a project ref, a comment block. `printf 'newvalue\n' > file` truncates everything after line 1 and the collateral loss surfaces later as a mystery 401 on an endpoint you were not touching. Either patch just the target line, or re-read the file first and rewrite it complete. After the write, assert the file still has the same number of non-empty lines and that each unrelated value is byte-identical, then live-test BOTH the changed path and the neighbour that shares the file.
 
@@ -92,6 +94,33 @@ Use when a page, mini-app or static bundle is served publicly and holds — or m
    lines shows up as a sudden drop, and that is the moment to restore the neighbour
    rather than an hour later when some other endpoint starts failing.
 
+## Provider key resolution
+
+A script or agent that generates media or calls a provider resolves the key in
+this order, and the order is fixed:
+
+1. its own environment (the runner's exported var), then
+2. the vault `/root/.secrets/<service>.env` / `tokens.env`, then
+3. `~/.hermes/.env` (Hermes' own settings only).
+
+**AnyModel.org provider key** — `ANYMODEL_API_KEY` is a project secret in the
+vault (`/root/.secrets/tokens.env`, line `ANYMODEL_API_KEY=...`), not a
+Hermes provider key:
+
+- Read it by parsing the file, never by `os.environ['ANYMODEL_API_KEY']` unless
+  that variable was set by the user at runtime (a production runner), not by the
+  agent script.
+- Never print the value into chat, logs, or a skill file — print the variable
+  NAME only.
+- If the key is missing: fail with `ANYMODEL_API_KEY не установлен`; do not
+  fall back to an old key or a hardcoded value.
+- Before generating, `GET /v1/models` with a real HTTP client (curl or requests)
+  to confirm the gateway is reachable and the key authenticates. A 401 means the
+  key is wrong or the service is not active, not that the model does not exist.
+
 ## Reporting
 
-Say which files now exist, their modes, what was verified live (with the actual status code), what remains unfilled, and which old paths were removed. State plainly if a suspected leak turned out to be clean — a wrong alarm costs the user time.
+Say which files now exist, their modes, what was verified live (with the actual
+status code), what remains unfilled, and which old paths were removed. State
+plainly if a suspected leak turned out to be clean — a wrong alarm costs the
+user time.

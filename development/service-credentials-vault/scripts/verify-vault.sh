@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-# Audit a secrets vault: modes, inventory, leftover artifacts.
+# Audit /root/.secrets: modes, inventory, leftover artifacts.
 # Read-only: never prints a secret value, only key NAMES.
-# Usage: verify-vault.sh [VAULT_PATH]   (default: /root/.secrets)
 set -uo pipefail
-VAULT="${1:-${SECRETS_VAULT:-/root/.secrets}}"
+VAULT=/root/.secrets
 
 echo "== vault perms"
 stat -c '%a %n' "$VAULT" 2>/dev/null || { echo "MISSING: $VAULT"; exit 1; }

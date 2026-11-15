@@ -1,0 +1,116 @@
+{
+  "bundle_hash": "sha256:d06bfeedf53d62850b438f46a733c8bade1e9323a6b4dae13a56541a1324dcd8",
+  "scanner_version": "skills-guard-v8",
+  "source": "official",
+  "source_url": "official/research/scrapling",
+  "verdict": "safe",
+  "trust_level": "builtin",
+  "findings": [
+    {
+      "pattern_id": "unpinned_pip_install",
+      "severity": "medium",
+      "category": "supply_chain",
+      "file": "SKILL.md",
+      "line": 34,
+      "match": "pip install \"scrapling[all]\"",
+      "description": "pip install without version pinning"
+    },
+    {
+      "pattern_id": "unpinned_pip_install",
+      "severity": "medium",
+      "category": "supply_chain",
+      "file": "SKILL.md",
+      "line": 40,
+      "match": "pip install scrapling",
+      "description": "pip install without version pinning"
+    },
+    {
+      "pattern_id": "unpinned_pip_install",
+      "severity": "medium",
+      "category": "supply_chain",
+      "file": "SKILL.md",
+      "line": 45,
+      "match": "pip install \"scrapling[fetchers]\"",
+      "description": "pip install without version pinning"
+    },
+    {
+      "pattern_id": "unpinned_pip_install",
+      "severity": "medium",
+      "category": "supply_chain",
+      "file": "SKILL.md",
+      "line": 331,
+      "match": "- **Browser install required**: run `scrapling install` after pip install -- without it, `DynamicFetcher` and `Stealt...",
+      "description": "pip install without version pinning"
+    },
+    {
+      "pattern_id": "remote_fetch",
+      "severity": "medium",
+      "category": "supply_chain",
+      "file": "SKILL.md",
+      "line": 77,
+      "match": "scrapling extract fetch 'https://example.com' output.md \\",
+      "description": "fetches remote resource at runtime"
+    },
+    {
+      "pattern_id": "remote_fetch",
+      "severity": "medium",
+      "category": "supply_chain",
+      "file": "SKILL.md",
+      "line": 86,
+      "match": "scrapling extract stealthy-fetch 'https://protected-site.com' output.html \\",
+      "description": "fetches remote resource at runtime"
+    },
+    {
+      "pattern_id": "remote_fetch",
+      "severity": "medium",
+      "category": "supply_chain",
+      "file": "SKILL.md",
+      "line": 154,
+      "match": "page = DynamicFetcher.fetch('https://example.com', headless=True)",
+      "description": "fetches remote resource at runtime"
+    },
+    {
+      "pattern_id": "remote_fetch",
+      "severity": "medium",
+      "category": "supply_chain",
+      "file": "SKILL.md",
+      "line": 176,
+      "match": "page = session.fetch('https://example.com')",
+      "description": "fetches remote resource at runtime"
+    },
+    {
+      "pattern_id": "remote_fetch",
+      "severity": "medium",
+      "category": "supply_chain",
+      "file": "SKILL.md",
+      "line": 192,
+      "match": "page = DynamicFetcher.fetch('https://example.com', page_action=scroll_and_click)",
+      "description": "fetches remote resource at runtime"
+    },
+    {
+      "pattern_id": "remote_fetch",
+      "severity": "medium",
+      "category": "supply_chain",
+      "file": "SKILL.md",
+      "line": 219,
+      "match": "page1 = session.fetch('https://protected-site.com/page1')",
+      "description": "fetches remote resource at runtime"
+    },
+    {
+      "pattern_id": "remote_fetch",
+      "severity": "medium",
+      "category": "supply_chain",
+      "file": "SKILL.md",
+      "line": 220,
+      "match": "page2 = session.fetch('https://protected-site.com/page2')",
+      "description": "fetches remote resource at runtime"
+    }
+  ],
+  "rules": [
+    "remote_fetch",
+    "unpinned_pip_install"
+  ],
+  "scanned_at": "2026-10-10T04:34:21.143832+00:00",
+  "summary": "scrapling: safe \u2014 11 finding(s) in supply_chain",
+  "fresh": true
+}

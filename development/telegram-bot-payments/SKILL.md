@@ -22,8 +22,21 @@ paid access, subscriptions, or "take money in the bot".
 | **CloudPayments** | subscriptions, recurring, no redirect | Widget, `api.cloudpayments.ru`, card token in Pay notification, plan amount editable anytime. Best for paid-signal channels. |
 | **YooKassa** | universal, one-off + recurring, 54-ФЗ receipts | Good docs, Python SDK, status webhooks. Safe default. |
 | **Robokassa** | also covers Telegram/MAX/VK natively | Good fallback. |
+| **Telegram Stars** | built-in, XTR currency, no provider_token | Bot must have Stars enabled in BotFather; new bots often don't. Gate the menu on a runtime check (`getMyStarBalance`), don't hardcode. |
+| **CryptoBot / Crypto Pay** | crypto (USDT/TON/BTC), no ИП, no BotFather | Endpoint `pay.crypt.bot/api/` (NOT `api.telegram.org/bot...`), auth via `Crypto-Pay-API-Token` header. |
+| **Lava.top** | RU market, recurring subscriptions only, no ИП required for sales | `POST /api/v3/invoice` with `periodicity=MONTHLY`. Auth via `X-Api-Key` header. Webhook auth uses the same key. See `references/lava-top.md`. |
 
-Don't build on two providers at once. Pick by the order's shape.
+Don't build on two providers at once for the same flow. Pick by the order's shape.
+
+## Multi-provider setup pattern
+
+When the bot must support several payment methods that each may or may not be configured:
+
+1. Each provider's availability is gated by a single env var (e.g. `CRYPTOBOT_TOKEN`, `LAVA_API_KEY`, `UKASSA_PROVIDER_TOKEN`).
+2. The `/topup` keyboard is built dynamically — only buttons for configured providers appear.
+3. Startup hook (`post_init` in python-telegram-bot) probes runtime features (e.g. `getMyStarBalance`) and stores results in `bot_data`; menu code reads from there.
+4. Each provider has its own pending-payment registry (`pending_lava`, `pending_crypto`) keyed by invoice/contract id, holding `{user_id, pkg, created_at}` so the webhook/auto-check can finish crediting.
+5. One `successful_payment` table + one ledger — `payment_method` column distinguishes `stars` / `card` / `cryptobot` / `lava_sub`. Don't fork the database per provider.
 
 ## Core mechanics (provider-agnostic)
 
@@ -75,6 +88,20 @@ only from webhooks.
 - **Refunds**: build the refund path (provider API) before launch.
 - **Legal**: client needs ИП/самозанятость + provider approval of the niche.
   Trading-signal niches face stricter moderation — set that expectation early.
+
+### python-telegram-bot specifics
+
+- **First matching callback handler wins.** PTB does NOT chain handlers that both match — it picks the first registered one. If you register `CallbackQueryHandler(menu_callback)` without a pattern AND a second one with `pattern="^topup_"`, every callback is eaten by the first and the second never fires. Fix: register ONE general handler and dispatch by `callback_data` prefix inside it.
+- **Do not re-import a globally imported name inside a function.** Python sees the local `import` and promotes the name to a local variable for the WHOLE function; the top of the function then raises `UnboundLocalError` because the assignment hasn't run yet. If a module is imported at the top of the file, never `from x import that_module` again inside a function — call it directly.
+- **`getMyStarBalance` may not exist on `ExtBot`** in older PTB versions. Wrap the call in try/except and treat absence as "Stars unavailable". Hardcoding "Stars works" is wrong for fresh bots.
+- **Register `CallbackQueryHandler` for `pre_checkout_query` and `MessageHandler` with `filters.SUCCESSFUL_PAYMENT`** at the dispatcher level — these are NOT callbacks, they have their own handler types.
+
+### Webhook hosting
+
+- **Run the webhook server inside the same PTB process** via `Application.post_init` + `asyncio.create_task`. PTB uses long polling for Telegram updates so the event loop is free. Spinning up a separate systemd unit is unnecessary unless the webhook handler is heavy.
+- **Bind to `127.0.0.1`, not `0.0.0.0`.** Terminate TLS at the public reverse proxy (nginx/caddy) and proxy to localhost. Lets the proxy own certificates.
+- **Always respond `200 OK` quickly**, then process. Most providers retry on any non-2xx; slow handlers trigger 20+ retries and you waste API quota.
+- **For nginx in docker** (`jonasal/nginx-certbot` style): the vhost file inside the container has `server { listen 443 ssl; ... }` blocks. New `location` directives must be inserted INSIDE the active server block — appending at file end puts them between blocks and nginx fails `nginx -t` with "location directive is not allowed here".
 
 ## Selling point
 

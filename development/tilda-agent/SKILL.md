@@ -11,7 +11,9 @@ metadata:
 
 # Tilda Agent — CLI surface over Tilda MCP
 
-`tilda-agent` wraps the 237-tool Tilda MCP server at `tilda.ru/api/mcp/`
+The standalone CLI has no LLM/model of its own: it executes typed MCP operations. A manager or separate coding agent supplies the design and content; do not attribute a fixed neural model to this wrapper.
+
+`tilda-agent` wraps the 278-tool Tilda MCP server at `tilda.ru/api/mcp/`
 behind a typed CLI with dry-run/apply semantics and auto-backup before
 every write. Lives at `/root/tilda-agent/`. Secret at
 `/root/.secrets/tilda.env`. Smoke test: `python3 tests/test_smoke.py`
@@ -21,6 +23,7 @@ heavily, the retries dominate the runtime.
 
 ## When to use
 
+- Первым делом — проверка доступа: `get_projects` должен вернуть непустой список. Пустой список при рабочем `get_profile` означает пустой scope ключа, а не истёкший токен; лечится редактированием scope в Tilda → Профиль → MCP-сервер → ⋯ → Редактировать. Каждый `get_pages` тогда отвечает `-32031 insufficient_project_access`.
 - Batch-edit SEO, head_code, CSS, sitemap, robots, ads.txt, llms.txt, 301
   redirects across Tilda sites — anything the editor does in 50 clicks,
   do in 1 shell command.
@@ -46,6 +49,11 @@ Skipping any of these makes every call fail with cryptic errors.
 
 ## Tool quirks that burned real time — bake them in, never re-derive
 
+- Parse each mutator's actual return shape: `add_blank_page` can return a numeric page ID, while `add_record` returns `{recordid: ...}`. Persist created IDs immediately; if parsing fails after a write, inspect the target before retrying so you do not create duplicate blocks.
+- The tool gateway's `describe_tool` helper may not exist on the raw MCP endpoint (`Unknown tool`). For the raw CLI client, inspect `list_tools()` and the exact record's editor schema instead of repeatedly calling a gateway-only helper.
+- HTTP 429 bodies can carry JSON-RPC `error.data.retry_at` even when Retry-After is absent. Respect that epoch deadline; header-only exponential retries can exhaust before the reset. Pace successful read/write/readback calls too. Keep task-specific retry changes in the task adapter rather than modifying shared production clients mid-build.
+- For image-free native SV402 cards, a requested settings `height="auto"` may save canonically as `""`. Use the accepted empty value and verify it; do not weaken readback checks for unrelated values.
+
 - **`head_code` is `headcode`** (one word) on the setter, NOT
   `head_code`. Wrong key → server silently ignores, returns OK.
 - **`css_code` is `csscode`** — same trap.
@@ -59,10 +67,7 @@ Skipping any of these makes every call fail with cryptic errors.
 - **`redirects`** wants `data: [{url_from, url_to}, ...]` — NOT
   `from`/`to`, NOT JSON-string. Wrong shape returns "Wrong redirects
   format!" or "Internal error".
-- **No `move_page_to_trash` tool.** Deleting a page is not exposed in the 237
-  tools; `pages publish` exists but removal does not. Test pages accumulate —
-  verify a published page by content and leave cleanup to the Tilda editor
-  unless a trash tool is found.
+- Do not assume page removal is unavailable: current catalogs include `delete_page` and recovery tools. Discover the current schema and key permissions, and use them only for explicitly authorized cleanup of a disposable target; absence from the high-level CLI is not absence from MCP.
 - **`pages create` ignores the alias** — the published URL comes out as
   `page<id>.html`, and the alias field stays `""` unless set separately via
   `update_page_settings`.
@@ -202,7 +207,8 @@ Wrapper: `tilda instructions zero_block_instructions`.
   `--apply`.
 - Secret in `/root/.secrets/tilda.env` (chmod 600). Never hardcode, log,
   or commit.
-- No browser automation. Pure HTTPS MCP. No passwords in chat ever.
+- The CLI itself uses HTTPS MCP, not browser automation. Account setup or scoped-key creation outside its permissions may use the authenticated editor with browser-vault tools. Never change existing keys or other projects as collateral work; never put passwords in chat or ordinary browser input tools.
+- If vault fill reports success but the active login form's password-readiness boolean is false, inspect duplicate login tabs opened for the task. Reconcile those duplicates and use one target rather than assuming bad credentials or copying a password manually. Never print password values while diagnosing.
 
 ## Layout
 
@@ -215,6 +221,16 @@ Wrapper: `tilda instructions zero_block_instructions`.
 ├── output/backups/       auto-backups before every write
 └── README.md
 ```
+
+## Unpublished-site delivery and QA
+
+- Inspect the account and existing project before creating a new one. A project-scoped MCP key cannot create projects outside its scope; do not mistake its filtered `get_projects` list for the full account. Reuse an existing draft only after the user identifies/authorizes it. Keep the build key limited to that project and omit publication rights when publication is not authorized.
+- Treat Tilda preview as a distinct runtime: native forms render as `.t-form` DIVs, submission is disabled, and page-head/T123 custom code is omitted. Open the authenticated editor with `?pageid=...&previewmode=yes` and inspect its iframe; a direct `/page/preview/` navigation can return a blank document. Do not publish to work around this boundary.
+- Capture exact `page_preview` HTML and run isolated browser replay with real CDN assets when preview interaction tools are limited. Label replay, explicit saved-head injection, authenticated live preview, and end-to-end form delivery separately. Never call local validation or an injected script proof of actual submission.
+- Verify native form time ranges, not just masks: a `tm` field can accept `29:99`. For a booking inquiry, a required native `sb` dropdown of valid demonstration times avoids that gap without custom JavaScript; label choices as preferences, not available appointment slots.
+- Test FAQ keyboard state after automatic sibling closure and rapid toggling. In tplid 1119, exclusive `checkbox3="on"` can leave stale ARIA or pending timers that hide newly opened panels. When exclusivity is not required, `checkbox3=""` enables independent panels and avoids the sibling-close race; recheck the rendered state after the write.
+- Use `.t-zoomer__wrapper` and `body.t-zoomer__show` for gallery assertions, not a nonexistent `.t-zoomer`. Always close overlays in `finally` and isolate test contexts so one failed gallery check cannot cascade into false form/navigation failures.
+- Keep contacts fictional honestly: a configurable Telegram link may target an explanatory local anchor until the owner supplies a real handle. Do not connect receivers belonging to other sites just because the account-wide editor lists them. Native Leads storage and external receivers are separate; actual delivery still needs an authorized published-page test.
 
 ## Known limitations
 

@@ -1,96 +1,185 @@
 # hermes-skills
 
-Набор навыков (skills) для [Hermes Agent](https://hermes-agent.nousresearch.com/),
-собранный под заказы на ботов и автоматизацию (Telegram / MAX, n8n, платежи, промпты).
+Набор навыков для [Hermes Agent](https://hermes-agent.nousresearch.com/).
+
+Репозиторий ведётся автоматически с рабочего сервера.
+
+Всего навыков: **163**
+
+## Навыки
+
+- `agent-delegation-and-coding-tasks`
+- `agent-identity-and-memory`
+- `agent-mailbox-operations`
+- `apple/apple-notes`
+- `apple/apple-reminders`
+- `apple/findmy`
+- `apple/imessage`
+- `autonomous-ai-agents/claude-code`
+- `autonomous-ai-agents/codex`
+- `autonomous-ai-agents/computer-use`
+- `autonomous-ai-agents/dynamic-workflow`
+- `autonomous-ai-agents/hermes-agent`
+- `autonomous-ai-agents/opencode`
+- `autonomous-ai-agents/subagent-library`
+- `beatapi`
+- `beef-accounting`
+- `bot-knowledge-base-quality`
+- `creative/architecture-diagram`
+- `creative/ascii-video`
+- `creative/baoyu-infographic`
+- `creative/claude-design`
+- `creative/design-md`
+- `creative/design-system-recommender`
+- `creative/humanizer`
+- `creative/manim-video`
+- `creative/p5js`
+- `creative/popular-web-designs`
+- `creative/seedance-2-5-30s`
+- `creative/seedance-video-generation`
+- `creative/songwriting-and-ai-music`
+- `development/agent-skills-addy-osmani`
+- `development/browser-admin-console`
+- `development/comfyui-reverse-engineering`
+- `development/context7-docs`
+- `development/design-system-recommender`
+- `development/dewiar-reverse-engineering`
+- `development/freelance-order-response`
+- `development/ghidra-reverse-engineering`
+- `development/github-repo-study-workflow`
+- `development/graphify-knowledge-graph`
+- `development/hermes-workflow`
+- `development/landing-page-copy`
+- `development/magic-mcp-21st`
+- `development/max-inbound-longpoll-support-triage`
+- `development/max-messenger-api`
+- `development/motion-sites-landing`
+- `development/multi-platform-ai-bot-integration`
+- `development/org-contact-base-collection`
+- `development/outreach-pipeline`
+- `development/prompt-engineering`
+- `development/rea-reverse-engineering`
+- `development/salon-site-outreach`
+- `development/service-credentials-vault`
+- `development/ssh-access-troubleshooting`
+- `development/standalone-llm-agent-pattern`
+- `development/strix-ai-pentesting`
+- `development/telegram-ad-vetting`
+- `development/telegram-bot-payments`
+- `development/telegram-bot-runtime-debugging`
+- `development/telegram-chat-base-collection`
+- `development/telegram-llm-agent-bot`
+- `development/tilda-agent`
+- `development/tilda-mcp-cdp`
+- `development/tilda-mcp-official`
+- `development/web-code-delegation`
+- `devops/deploy-agents`
+- `devops/devops-tools-essentials`
+- `devops/docker-management`
+- `devops/production-health-sweep`
+- `devops/sdlc-review`
+- `devops/watchers`
+- `email/email-ai-automation`
+- `email/email-inbox-triage`
+- `email/himalaya`
+- `embedded-firmware-bringup`
+- `generated-client-text-quality`
+- `geo-sleuth`
+- `google-sheets-writes`
+- `hermes-dashboard-auth`
+- `maps/maps-deeplink-route`
+- `media/ai-video-pipeline`
+- `media/ffmpeg-video-concat`
+- `media/generative-media-api-generation`
+- `media/gif-search`
+- `media/production-reels-pipeline`
+- `media/songsee`
+- `media/stt-voice-messages`
+- `media/youtube-content`
+- `media/youtube-video-download`
+- `n8n-workflows`
+- `n8n-workflows/freelance-leads-scan`
+- `note-taking/obsidian`
+- `payments/payments-billing-platforms`
+- `payments/stripe-link-cli`
+- `productivity/airtable`
+- `productivity/box`
+- `productivity/document-to-action-items`
+- `productivity/docx`
+- `productivity/freelance-profile-packaging`
+- `productivity/google-workspace`
+- `productivity/hermes-cron`
+- `productivity/hermes-custom-provider`
+- `productivity/jev-router`
+- `productivity/maps`
+- `productivity/meeting-action-items`
+- `productivity/message-archive-analysis`
+- `productivity/notion`
+- `productivity/pdf`
+- `productivity/powerpoint`
+- `productivity/product-price-monitor`
+- `productivity/shopify`
+- `productivity/teams-meeting-pipeline`
+- `productivity/telephony`
+- `productivity/weekly-review-planning`
+- `productivity/xlsx`
+- `qa-agent`
+- `research/arxiv`
+- `research/competitor-news-monitor`
+- `research/grounded-citations`
+- `research/idea-validation`
+- `research/llm-wiki`
+- `research/oss-project-evaluation`
+- `research/scrapling`
+- `research/searxng-search`
+- `second-brain-kb`
+- `social-media/instagram-skills`
+- `social-media/reels-autopost-setup`
+- `social-media/reels-publisher`
+- `social-media/telegram-personal-export-analysis`
+- `social-media/xurl`
+- `software-development/adversarial-code-review`
+- `software-development/audit-tool-validation`
+- `software-development/codebase-inspection`
+- `software-development/dogfood`
+- `software-development/embedded-hardware-builds`
+- `software-development/github`
+- `software-development/hermes-agent-skill-authoring`
+- `software-development/hermes-mcp-server-setup`
+- `software-development/inspecting-hermes-desktop-dom`
+- `software-development/n8n-workflow-operations`
+- `software-development/node-inspect-debugger`
+- `software-development/python-debugpy`
+- `software-development/qa-agent-production-suites`
+- `software-development/requesting-code-review`
+- `software-development/simplify-code`
+- `software-development/skill-routing-eval`
+- `software-development/spike`
+- `software-development/subagent-driven-development`
+- `software-development/systematic-debugging`
+- `software-development/test-driven-development`
+- `software-development/third-party-tool-vetting`
+- `software-development/web-app-change-verification`
+- `supabase-crud-patterns`
+- `vps-nginx-static-deploy`
+- `web-assistant-deploy`
+- `web-development/cloudflare-temporary-deploy`
+- `web-development/publish-site`
+- `web-development/web-design-check`
+- `web-development/web-performance-audit`
+- `web-panel-on-existing-vps`
+- `web/blocked-page-recovery`
+- `workflow/harsh-sister`
+- `yandex-cloud-ai-api`
 
 ## Установка
 
 ```bash
-# добавить этот репозиторий как источник навыков
 hermes skills tap add yakovlevgsbit/hermes-skills
-
-# проверить, что Hermes их видит
 hermes skills search payments
-
-# установить конкретный навык
-hermes skills install yakovlevgsbit/hermes-skills/development/telegram-bot-payments
-hermes skills install yakovlevgsbit/hermes-skills/development/prompt-engineering
 ```
 
-## Что внутри
+## Безопасность
 
-### development — боты, платежи, промпты, реверс-инженеринг
-
-| Навык | Зачем |
-|---|---|
-| `telegram-bot-payments` | Платежи в боте: CloudPayments / ЮKassa, подписки, рекуррент, доступ |
-| `stripe-link-cli` | Международные платежи: Stripe Link, карты, подписки, апрувы |
-| `prompt-engineering` | Системные промпты, строгий JSON-вывод, text→image |
-| `max-messenger-api` | Платформа MAX: sender в query, endpoints, ловушки верификации |
-| `shopify` | E-commerce: Shopify Admin/Storefront GraphQL |
-| `telephony` | Голосовые боты: Twilio номера, SMS/MMS, AI-звонки |
-| `service-credentials-vault` | Хранение ключей: `/root/.secrets` (700/600), без утечек |
-| `subagent-driven-development` | Делегирование кода сабагентам + 2-этапное ревью |
-| `dynamic-workflow` | Fan-out планы, adversarial-верификация, волны |
-| `famulor-skill` | Голосовые агенты: ассистенты, звонки, кампании, телефония (hosted MCP) |
-| `tweetclaw` | X/Twitter автоматизация: поиск, экспорт подписчиков, мониторы, посты |
-| `cronalytics` | Диагностика cron-задач Hermes: здоровье, сбои, дрейф расписания |
-| `figma` | Тянет дизайн из Figma REST API (нужен `FIGMA_TOKEN`) → реализация макетов |
-| `ui-ux-pro-max` | UI/UX-дизайн интеллект: 79 стилей, палитры, шрифты, UX-правила (search.py, своя база) |
-| `dewiar-reverse-engineering` | Голосовой ассистент Dewiar — 93 модуля, архитектура, mixin-паттерн |
-| `comfyui-reverse-engineering` | ComfyUI — node system, caching, WebSocket, execution engine |
-| `agent-skills-addy-osmani` | 25 production-скиллов, 9 slash-commands, dev lifecycle |
-| `context7-docs` | MCP-сервер для актуальной документации библиотек |
-| `graphify-knowledge-graph` | Knowledge graph из codebase, EXTRACTED/INFERRED, MCP tools |
-| `magic-mcp-21st` | 10,000+ React/Tailwind компонентов, HTTP MCP, AI генерация |
-| `strix-ai-pentesting` | AI-пентест, multi-agent orchestration, Docker sandbox |
-| `rea-reverse-engineering` | REA — 324.7k stars, MCP для реверс-инженерии бинарников, JS, .NET, Android, firmware |
-| `ghidra-reverse-engineering` | Ghidra — 87.6k stars, NSA, P-Code IR, Sleigh, headless, multi-arch, free |
-| `tilda-mcp-cdp` | 16 инструментов Tilda через MCP + CDP, обход read-only API |
-| `tilda-mcp-official` | Официальный Tilda MCP: 235 инструментов, хост tilda.ru |
-| `tilda-agent` | CLI поверх Tilda MCP: массовые операции, чтение/запись контента блоков, dry-run |
-
-### devops — CI/CD, инфраструктура
-
-| Навык | Зачем |
-|---|---|
-| `devops-tools-essentials` | ArgoCD, SOPS, Kestra, Gitea, Sentry — GitOps, secrets, self-hosted Git |
-
-### integrations — n8n, таблицы, деплой, скрапинг
-
-| Навык | Зачем |
-|---|---|
-| `n8n-workflows` | n8n REST: аудит, PUT в живые воркфлоу, бэкапы, шаблоны |
-| `google-sheets-writes` | Запись в Google Sheets через API v4 (Bearer) |
-| `docker-management` | Управление контейнерами, образами, Compose |
-| `publish-site` | Деплой на GitHub/Cloudflare/Netlify Pages |
-| `cloudflare-temporary-deploy` | Показать демо клиенту за секунды, без аккаунта |
-| `watchers` | Мониторинг RSS/JSON/GitHub с дедупом (усилитель лидов) |
-| `searxng-search` | Бесплатный keyless мета-поиск (70+ движков) |
-| `scrapling` | Скрапинг со stealth + Cloudflare bypass |
-
-### payments — платежи, биллинг
-
-| Навык | Зачем |
-|---|---|
-| `payments-billing-platforms` | Hyperswitch (45.3k), Polar (10.3k), Lago (10.7k) — composable, usage-based, AI billing |
-
-### email — автоматизация почты
-
-| Навык | Зачем |
-|---|---|
-| `email-ai-automation` | AI triage, three-tier classification, draft-first approach, Slack/Telegram |
-
-### productivity — продуктивность
-
-| Навык | Зачем |
-|---|---|
-| `jev-router` | Model routing by complexity, 5 вопросов, safety-first bias, ~$0.00006/решение |
-
-## Формат
-
-Каждый навык — папка `<category>/<skill-name>/` с файлом `SKILL.md`
-(YAML-frontmatter + markdown). Опционально: `references/`, `templates/`, `scripts/`.
-
-Секреты в скиллы не кладутся — только путь к ним. Конкретику (порты, ключи)
-вносят на месте при установке.
+Секреты сюда не попадают: `.env`, ключи и приватные сертификаты исключены;
+в навыках допустимы только пути к vault (`/root/.secrets/...`).

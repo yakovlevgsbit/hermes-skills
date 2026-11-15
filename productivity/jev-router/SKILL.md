@@ -10,6 +10,14 @@ MIT, 2 stars. Plugin for Hermes Agent.
 
 > **Полный разбор**: `/root/kb/projects/jev-router.md`
 
+## Model versus integration
+
+Distinguish TypeSafe's Jev decision model from this Hermes routing plugin. A marketing workflow may use the same underlying model for classification; this plugin does not thereby provide ad-account access or budget management.
+
+Keep arithmetic, dates, counts, money limits, and permission gates in deterministic code. A confidence score is not proof of a business outcome. Pin the evaluated model version and recheck thresholds before moving aliases.
+
+Verify capabilities on the actual provider and adapter. TypeSafe documents image/Box support as an experimental opt-in; a text-only adapter and the underlying provider can have different capabilities. Do not enable experimental image features on production client traffic merely to match a demo. Current source-backed findings: `/root/kb/projects/restructure-ad-creative-system.md`.
+
 ## What It Is
 
 Плагин для Hermes Agent. Сам выбирает модель по сложности каждого сообщения:

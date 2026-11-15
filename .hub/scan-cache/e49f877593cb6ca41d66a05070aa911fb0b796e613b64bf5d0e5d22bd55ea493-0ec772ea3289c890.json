@@ -1,0 +1,43 @@
+{
+  "bundle_hash": "sha256:e49f877593cb6ca41d66a05070aa911fb0b796e613b64bf5d0e5d22bd55ea493",
+  "scanner_version": "skills-guard-v8",
+  "source": "official",
+  "source_url": "official/web-development/publish-site",
+  "verdict": "caution",
+  "trust_level": "builtin",
+  "findings": [
+    {
+      "pattern_id": "tunnel_service",
+      "severity": "high",
+      "category": "network",
+      "file": "SKILL.md",
+      "line": 41,
+      "match": "- For local preview sharing: `cloudflared` (optional \u2014 `python3 -m http.server` covers local-only preview).",
+      "description": "uses tunneling service for external access"
+    },
+    {
+      "pattern_id": "tunnel_service",
+      "severity": "high",
+      "category": "network",
+      "file": "SKILL.md",
+      "line": 54,
+      "match": "| Shareable preview | `cloudflared tunnel --url http://localhost:8080` |",
+      "description": "uses tunneling service for external access"
+    },
+    {
+      "pattern_id": "tunnel_service",
+      "severity": "high",
+      "category": "network",
+      "file": "SKILL.md",
+      "line": 76,
+      "match": "cloudflared tunnel --url http://localhost:8080",
+      "description": "uses tunneling service for external access"
+    }
+  ],
+  "rules": [
+    "tunnel_service"
+  ],
+  "scanned_at": "2026-10-10T04:33:23.541776+00:00",
+  "summary": "publish-site: caution \u2014 3 finding(s) in network",
+  "fresh": true
+}

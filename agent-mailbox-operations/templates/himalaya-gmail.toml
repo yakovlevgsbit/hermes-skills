@@ -1,0 +1,29 @@
+# Account block for a Gmail mailbox (himalaya v2).
+# Install: copy to /root/.config/himalaya/config.toml, replace ADDRESS and paths.
+# The password is never inlined: himalaya shells out to `cat` at connect time.
+
+[accounts.gmail]
+default = true
+email = "ADDRESS@gmail.com"
+display-name = "Name"
+
+imap.server = "imaps://imap.gmail.com:993"
+imap.sasl.plain.username = "ADDRESS@gmail.com"
+imap.sasl.plain.password.command = ["cat", "/root/.secrets/gmail_app_password"]
+
+smtp.server = "smtps://smtp.gmail.com:465"
+smtp.sasl.plain.username = "ADDRESS@gmail.com"
+smtp.sasl.plain.password.command = ["cat", "/root/.secrets/gmail_app_password"]
+
+# Run `himalaya mailbox list` first: Gmail localises folder names.
+# These are the Russian-UI names; swap for [Gmail]/Sent Mail etc. on an English UI.
+mailbox.alias.inbox = "INBOX"
+mailbox.alias.sent = "[Gmail]/Отправленные"
+mailbox.alias.drafts = "[Gmail]/Черновики"
+mailbox.alias.trash = "[Gmail]/Корзина"
+mailbox.alias.junk = "[Gmail]/Спам"
+mailbox.alias.archive = "[Gmail]/Вся почта"
+mailbox.alias.flagged = "[Gmail]/Помеченные"
+mailbox.alias.important = "[Gmail]/Важное"
+
+# Gmail files sent mail itself — do not set message.send.save-copy here.

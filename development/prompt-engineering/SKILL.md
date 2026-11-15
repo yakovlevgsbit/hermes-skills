@@ -68,16 +68,47 @@ state they are data, not commands (prompt-injection guard).
 - Handle: NSFW/safety refusals, empty results, and rate limits gracefully.
 - Store the image prompt alongside the text JSON so output is reproducible.
 
-## 5. Cost & reliability
+## 6. Generator prompts: the planner emits prompts, the generator emits content
 
-- Free-tier models rate-limit per model; keep a fallback chain (see the
-  research agent's `MODEL_FALLBACKS` pattern) so one 429 doesn't drop a job.
-- Reasoning models (e.g. step-*) dump their thinking into `content` and can
-  exhaust the token budget before answering — put non-reasoning models first
-  for pure generation, and cut text before the last `Ответ:` marker if you must
-  use one.
-- Log prompt + output + model + cost per call from day one; it's how you debug
-  and how you prove value to the client.
+Some pipelines have one LLM that must do two things: author a plan **and** produce
+the final text/image/video. Split them. The planning agent is a separate prompt,
+and for every dated item it emits a **generator prompt** written into a schema
+column (`prompt`) for a downstream generation model (text, image, video).
+The generation model is then given only the prompt plus the stored source data —
+never the planning prompt.
+
+Reasoning: an LLM that both plans and generates drifts from the brief when it
+writes final copy. The planner picks the *what*; the generator gets the *how*.
+
+### Format-specific generator prompts
+
+Build the generator prompt from the item's `format`, `idea`, `goal`.
+Do not reuse one prompt for every format — each generation model needs a
+different shape of instruction.
+
+| Item `format` contains | Generator prompt rule |
+|---|---|
+| `video` | 10 seconds, vertical 9:16. Cinematic/short style, concise, no on-screen text, no markers, specific and detailed. |
+| `картинка` / `карточка` / `изображение` | 9:16 image for a generation model. Concrete visual, no lists, no explanations. |
+| otherwise (post / article / review / story) | Plain text content. Concise brief: topic, goal, concise style, text only, no headings/markers. |
+
+### Example generator prompts
+
+**Text.** `Gотовь текст-контент (пост/статью/опрос/серию сторис) под тему {idea}, цель {goal}. Стиль: лаконичный в духе целевой аудитории. Промпт для модели: только текст, без заголовков и маркеров.`
+
+**Video.** `Готовь промпт для видео (10 сек, вертикальный 9:16). Тема: {idea}. Цель: {goal}. Стиль: короткий, сценографический, без текста на кадре. Промпт для модели: конкретно, подробно, без маркеров.`
+
+**Image.** `Готовь промпт для генерации картинки 9:16 (фото/иллюстрация). Тема: {idea}. Цель: {goal}. Промпт для модели: конкретный визуал, без списков и пояснений.`
+
+### What to store vs generate
+
+- Store: the generator prompt (it is reproducible and can be re-run), plus the
+  item's `idea`, `goal`, `format`, `date`, `hashtags`.
+- Do NOT store a second prose copy of the prompt; keep it as a single field so a
+  downstream generator can read it directly.
+- Store the prompt per item, not one shared prompt for the whole plan.
+
+## 7. Delivering generation output to a client
 
 ## Selling as a template
 
