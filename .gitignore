@@ -5,3 +5,10 @@
 secrets/
 *.key
 *.pem
+
+# служебные кэши Hermes Hub — не навыки
+.hub/
+.curator_ledger.jsonl
+.curator_state
+.locks/
+.bundled_manifest
